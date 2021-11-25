@@ -5,8 +5,14 @@ function App() {
   return (
     <div>
       <h4>Hi! Are you buying or selling?</h4>
-      <NavLink to="/sell">SELLING</NavLink>
-      <NavLink to="/buy">BUYING</NavLink>
+      <ul>
+        <li>
+          <NavLink to="/sell">SELLING</NavLink>
+        </li>
+        <li>
+          <NavLink to="/buy">BUYING</NavLink>
+        </li>
+      </ul>
     </div>
   );
 }
