@@ -1,6 +1,6 @@
 import React from "react";
 
-const SellContainer = () => {
+const SellingPage = () => {
   return (
     <div>
       <h4>What are you selling?</h4>
@@ -8,4 +8,4 @@ const SellContainer = () => {
   );
 };
 
-export default SellContainer;
+export default SellingPage;
