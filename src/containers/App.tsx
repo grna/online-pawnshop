@@ -1,18 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import SellingPage from "../components/SellingPage";
+import BuyingPage from "../components/BuyingPage";
+import Header from "../components/Header";
+import LandingPage from "../components/LandingPage";
 
 function App() {
   return (
     <div>
-      <h4>Hi! Are you buying or selling?</h4>
-      <ul>
-        <li>
-          <NavLink to="/sell">SELLING</NavLink>
-        </li>
-        <li>
-          <NavLink to="/buy">BUYING</NavLink>
-        </li>
-      </ul>
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/sell" element={<SellingPage />} />
+        <Route path="/buy" element={<BuyingPage />} />
+      </Routes>
     </div>
   );
 }
