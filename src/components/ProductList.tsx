@@ -8,7 +8,7 @@ const ProductList = (props: { products: TypeProduct[] }) => {
   return (
     <ProductListWrapper>
       {products.map((product) => (
-        <Product product={product} />
+        <Product key={product._id} product={product} />
       ))}
     </ProductListWrapper>
   );

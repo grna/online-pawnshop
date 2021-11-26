@@ -1,4 +1,5 @@
 export interface TypeProduct {
+  _id: string;
   title: string;
   quantity: number;
   price: number;

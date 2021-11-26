@@ -60,3 +60,16 @@ export const ButtonLarge = styled.button`
     border: 2px solid violet;
   }
 `;
+
+export const FormFieldWrapper = styled.div`
+  margin-bottom: 1rem;
+  & input,
+  & select {
+    border: none;
+    border-radius: 3px;
+  }
+`;
+
+export const ErrorWrapper = styled.div`
+  color: red;
+`;
