@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { LandingPageWrapper } from "./styledComponents";
 
 const LandingPage = () => {
   return (
-    <div>
+    <LandingPageWrapper>
       <h4>Hi! Are you buying or selling?</h4>
       <ul>
         <li>
@@ -13,7 +14,7 @@ const LandingPage = () => {
           <NavLink to="/buy">BUYING</NavLink>
         </li>
       </ul>
-    </div>
+    </LandingPageWrapper>
   );
 };
 
