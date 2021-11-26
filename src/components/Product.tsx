@@ -10,20 +10,20 @@ import { formatPrice, populateSelectOptions } from "../tools/helperFunctions";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-interface TypeBuyingForm {
+interface Values {
   quantity: number;
   offeredPrice: number;
 }
 
 const BuyingFormErrorSchema = Yup.object().shape({
   quantity: Yup.number().required("Required!"),
-  offeredPrice: Yup.number().required("Required"),
+  offeredPrice: Yup.number().required("Required!"),
 });
 
 const Product = (props: { product: TypeProduct }) => {
   const { product } = props;
 
-  const onFormSubmit = (values: TypeBuyingForm) => {};
+  const onFormSubmit = (values: Values) => {};
 
   return (
     <ProductWrapper>
@@ -36,7 +36,7 @@ const Product = (props: { product: TypeProduct }) => {
       </p>
       <Formik
         initialValues={{
-          quantity: product.quantity,
+          quantity: 1,
           offeredPrice: product.price,
         }}
         validationSchema={BuyingFormErrorSchema}
@@ -45,7 +45,7 @@ const Product = (props: { product: TypeProduct }) => {
           <Form>
             <FormFieldWrapper>
               <label htmlFor="quantity">{`Quantity: `}</label>
-              <Field name="quantity" as="select" value={1}>
+              <Field name="quantity" as="select">
                 {populateSelectOptions(product.quantity)}
               </Field>
               {touched.quantity && errors.quantity && (

@@ -57,7 +57,7 @@ export const ButtonLarge = styled.button`
 
   &:hover {
     cursor: pointer;
-    border: 2px solid violet;
+    border: 2px solid red;
   }
 `;
 
