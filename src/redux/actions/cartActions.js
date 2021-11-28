@@ -1,16 +1,16 @@
 import { ADD_TO_CART_SUCCESS, REMOVE_FROM_CART_SUCCESS } from "../ActionTypes";
 
 export const addToCart = (product) => (dispatch, getState) => {
-  const cartItems = getState().cart.cartItems.slice();
+  const cartItems = getState().fromCart.cartItems.slice();
   let inCart = false;
-  cartItems.forEach((x) => {
-    if (x.id === product.id) {
+  cartItems.forEach((item) => {
+    if (item._id === product._id) {
       inCart = true;
-      x.count++;
+      item.quantity++;
     }
   });
   if (!inCart) {
-    cartItems.push({ ...product, count: 1 });
+    cartItems.push(product);
   }
   dispatch({
     type: ADD_TO_CART_SUCCESS,

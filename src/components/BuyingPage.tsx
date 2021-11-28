@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import { fetchProducts } from "../redux/actions/productsActions";
 import ProductList from "./ProductList";
 import { ContainerCenter } from "./styledComponents";
+import { addToCart } from "../redux/actions/cartActions";
 
 const BuyingPage = (props: Props) => {
-  const { products, fetchProducts } = props;
+  const { products, fetchProducts, addToCart } = props;
 
   useEffect(() => {
     fetchProducts();
@@ -15,7 +16,7 @@ const BuyingPage = (props: Props) => {
   return (
     <ContainerCenter>
       <h4>Choose your items</h4>
-      <ProductList products={products} />
+      <ProductList products={products} addToCart={addToCart} />
     </ContainerCenter>
   );
 };
@@ -24,4 +25,6 @@ const mapStateToProps = (state: TypeState) => ({
   products: state.fromProducts.products,
 });
 
-export default connect(mapStateToProps, { fetchProducts })(BuyingPage);
+export default connect(mapStateToProps, { fetchProducts, addToCart })(
+  BuyingPage
+);
