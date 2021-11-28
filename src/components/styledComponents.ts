@@ -32,7 +32,9 @@ export const ContainerCenter = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
+  align-items: center;
   text-align: center;
+  width: 100%;
 `;
 
 export const ProductListWrapper = styled.div`

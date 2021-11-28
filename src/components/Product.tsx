@@ -1,72 +1,24 @@
 import React from "react";
 import { TypeProduct } from "../tools/interfaces";
-import {
-  ButtonLarge,
-  ProductWrapper,
-  FormFieldWrapper,
-  ErrorWrapper,
-} from "./styledComponents";
-import { formatPrice, populateSelectOptions } from "../tools/helperFunctions";
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { ProductWrapper } from "./styledComponents";
+import { formatPrice } from "../tools/helperFunctions";
 
-interface Values {
-  quantity: number;
-  offeredPrice: number;
-}
-
-const BuyingFormErrorSchema = Yup.object().shape({
-  quantity: Yup.number().required("Required!"),
-  offeredPrice: Yup.number().required("Required!"),
-});
-
-const Product = (props: { product: TypeProduct }) => {
-  const { product } = props;
-
-  const onFormSubmit = (values: Values) => {};
+const Product = (props: {
+  children: React.ReactNode | null;
+  product: TypeProduct;
+}) => {
+  const { children, product } = props;
 
   return (
     <ProductWrapper>
       <h5>{product.title}</h5>
       <p>
-        <strong>{`Stock: `}</strong>
+        <strong>{`Quantity: `}</strong>
         {product.quantity}
         <strong>{` Price: `}</strong>
         {formatPrice(product.price)}
       </p>
-      <Formik
-        initialValues={{
-          quantity: 1,
-          offeredPrice: product.price,
-        }}
-        validationSchema={BuyingFormErrorSchema}
-        onSubmit={(values) => onFormSubmit(values)}>
-        {({ errors, touched }) => (
-          <Form>
-            <FormFieldWrapper>
-              <label htmlFor="quantity">{`Quantity: `}</label>
-              <Field name="quantity" as="select">
-                {populateSelectOptions(product.quantity)}
-              </Field>
-              {touched.quantity && errors.quantity && (
-                <ErrorWrapper>
-                  <div>{errors.quantity}</div>
-                </ErrorWrapper>
-              )}
-            </FormFieldWrapper>
-            <FormFieldWrapper>
-              <label htmlFor="offeredPrice">Your price:</label>
-              <Field name="offeredPrice" />
-              {touched.offeredPrice && errors.offeredPrice && (
-                <ErrorWrapper>
-                  <div>{errors.offeredPrice}</div>
-                </ErrorWrapper>
-              )}
-            </FormFieldWrapper>
-          </Form>
-        )}
-      </Formik>
-      <ButtonLarge>To Cart</ButtonLarge>
+      {children}
     </ProductWrapper>
   );
 };
