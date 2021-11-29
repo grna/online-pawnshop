@@ -6,10 +6,11 @@ import { cartCheckOut, removeFromCart } from "../redux/actions/cartActions";
 
 const CartContainer = (props: {
   cartItems: TypeProduct[];
+  total: number;
   cartCheckOut: () => void;
   removeFromCart: (id: string) => void;
 }) => {
-  const { cartItems, cartCheckOut, removeFromCart } = props;
+  const { cartItems, total, cartCheckOut, removeFromCart } = props;
 
   if (cartItems.length === 0) {
     return <div>You have no cart items.</div>;
@@ -18,6 +19,7 @@ const CartContainer = (props: {
   return (
     <CartItemsList
       cartItems={cartItems}
+      total={total}
       cartCheckOut={cartCheckOut}
       removeFromCart={removeFromCart}
     />
@@ -26,6 +28,7 @@ const CartContainer = (props: {
 
 const mapStateToProps = (state: TypeState) => ({
   cartItems: state.fromCart.cartItems,
+  total: state.fromCart.total,
 });
 
 export default connect(mapStateToProps, { cartCheckOut, removeFromCart })(

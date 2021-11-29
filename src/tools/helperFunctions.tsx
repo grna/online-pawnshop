@@ -32,3 +32,7 @@ export const checkOfferedPrice = (
 
   return true;
 };
+
+export const makePriceOffer = (desiredPrice: number) => {
+  return desiredPrice * (Math.random() * (0.9 - 0.5) + 0.5);
+};

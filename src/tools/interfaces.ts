@@ -11,6 +11,7 @@ interface FromProducts {
 
 interface FromCart {
   cartItems: TypeProduct[];
+  total: number;
 }
 
 export interface TypeState {

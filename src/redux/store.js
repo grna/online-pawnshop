@@ -7,6 +7,10 @@ const initialState = {
   fromProducts: {
     products: [],
   },
+  fromCart: {
+    cartItems: [],
+    total: 0,
+  },
 };
 
 const composeEnhanser = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

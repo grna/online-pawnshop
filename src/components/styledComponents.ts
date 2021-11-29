@@ -67,7 +67,7 @@ export const FormFieldWrapper = styled.div`
   margin-bottom: 1rem;
   & input,
   & select {
-    border: none;
+    border: 1px solid lightgrey;
     border-radius: 3px;
   }
 `;

@@ -8,14 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 const CartItemsList = (props: {
   cartItems: TypeProduct[];
+  total: number;
   cartCheckOut: () => void;
   removeFromCart: (id: string) => void;
 }) => {
   const navigate = useNavigate();
-  const { cartItems, cartCheckOut, removeFromCart } = props;
-  const [total, setTotal] = useState(
-    cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
-  );
+  const { cartItems, total, cartCheckOut, removeFromCart } = props;
 
   const onCheckOut = (e: React.MouseEvent) => {
     e.preventDefault();
