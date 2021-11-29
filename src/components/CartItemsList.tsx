@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 const CartItemsList = (props: {
   cartItems: TypeProduct[];
   cartCheckOut: () => void;
+  removeFromCart: (id: string) => void;
 }) => {
   const navigate = useNavigate();
-  const { cartItems, cartCheckOut } = props;
+  const { cartItems, cartCheckOut, removeFromCart } = props;
   const [total, setTotal] = useState(
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
   );
@@ -23,12 +24,20 @@ const CartItemsList = (props: {
     navigate("/buy");
   };
 
+  const onRemoveClick = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    toast.success("Item removed.");
+    removeFromCart(id);
+  };
+
   return (
     <>
       <ProductListWrapper>
         {cartItems.map((item) => (
           <Product key={item._id} product={item}>
-            <ButtonLarge>Remove</ButtonLarge>
+            <ButtonLarge onClick={(e) => onRemoveClick(e, item._id)}>
+              Remove
+            </ButtonLarge>
           </Product>
         ))}
       </ProductListWrapper>
