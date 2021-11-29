@@ -11,3 +11,24 @@ export const populateSelectOptions = (quantity: number) => {
   }
   return options;
 };
+
+const rollTheDice = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const checkOfferedPrice = (
+  offeredPrice: number,
+  productPrice: number
+) => {
+  const acceptablePrice = productPrice * 0.9;
+
+  if (offeredPrice < acceptablePrice) {
+    return false;
+  }
+
+  if (offeredPrice < productPrice && rollTheDice(1, 2) === 1) {
+    return false;
+  }
+
+  return true;
+};

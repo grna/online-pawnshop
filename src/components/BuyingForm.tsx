@@ -8,6 +8,8 @@ import { populateSelectOptions } from "../tools/helperFunctions";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { TypeProduct } from "../tools/interfaces";
+import { toast } from "react-toastify";
+import { checkOfferedPrice } from "../tools/helperFunctions";
 
 interface Values {
   quantity: number;
@@ -26,6 +28,13 @@ const BuyingForm = (props: {
   const { product, addToCart } = props;
 
   const onFormSubmit = (values: Values) => {
+    if (!checkOfferedPrice(values.offeredPrice, product.price)) {
+      toast.error("Offered price is too low.");
+      return;
+    }
+
+    toast.success("Deal! Item(s) were added to the cart.");
+
     const cartItem = {
       _id: product._id,
       title: product.title,
