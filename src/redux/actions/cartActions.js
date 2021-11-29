@@ -1,4 +1,8 @@
-import { ADD_TO_CART_SUCCESS, REMOVE_FROM_CART_SUCCESS } from "../ActionTypes";
+import {
+  ADD_TO_CART_SUCCESS,
+  CART_CHECKOUT_SUCCESS,
+  REMOVE_FROM_CART_SUCCESS,
+} from "../ActionTypes";
 import { reduceProductQuantity } from "./productsActions";
 
 export const addToCart = (product) => (dispatch, getState) => {
@@ -30,4 +34,12 @@ export const removeFromCart = (product) => (dispatch, getState) => {
     payload: { cartItems },
   });
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
+
+export const cartCheckOut = () => (dispatch) => {
+  dispatch({
+    type: CART_CHECKOUT_SUCCESS,
+    payload: { cartItems: [] },
+  });
+  localStorage.removeItem("cartItems");
 };
