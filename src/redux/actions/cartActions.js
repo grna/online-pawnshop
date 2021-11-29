@@ -1,4 +1,5 @@
 import { ADD_TO_CART_SUCCESS, REMOVE_FROM_CART_SUCCESS } from "../ActionTypes";
+import { reduceProductQuantity } from "./productsActions";
 
 export const addToCart = (product) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.slice();
@@ -12,6 +13,7 @@ export const addToCart = (product) => (dispatch, getState) => {
   if (!inCart) {
     cartItems.push(product);
   }
+  dispatch(reduceProductQuantity(product._id, product.quantity));
   dispatch({
     type: ADD_TO_CART_SUCCESS,
     payload: { cartItems },
