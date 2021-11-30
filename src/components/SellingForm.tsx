@@ -32,8 +32,9 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
       navigate("/");
       return;
     }
-    setCounterOffer(calcNewPrice(0.5, 0.9, values.desiredPrice));
-    toast.success(`Our offer is: ${formatPrice(cf)}. Do you accept?`);
+    const co = calcNewPrice(0.5, 0.9, values.desiredPrice);
+    setCounterOffer(co);
+    toast.success(`Our offer is: ${formatPrice(co)}. Do you accept?`);
   };
 
   const SellingFormValidationSchema = Yup.object().shape({
