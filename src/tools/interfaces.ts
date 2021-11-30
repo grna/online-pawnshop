@@ -24,3 +24,9 @@ export interface TypeBuyingPageProps {
   fetchProducts: () => void;
   addToCart: (cartItem: TypeProduct) => void;
 }
+
+export interface SellingFormValues {
+  title: string;
+  quantity: number;
+  desiredPrice: number;
+}
