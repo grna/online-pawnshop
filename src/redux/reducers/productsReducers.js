@@ -1,4 +1,8 @@
-import { LOAD_PRODUCTS_SUCCESS, LOAD_PRODUCTS_FAILED } from "../ActionTypes";
+import {
+  LOAD_PRODUCTS_SUCCESS,
+  LOAD_PRODUCTS_FAILED,
+  ADD_PRODUCT_SUCCESS,
+} from "../ActionTypes";
 
 const initialState = {
   products: [],
@@ -10,6 +14,8 @@ export const productsReducers = (state = initialState, action) => {
       return { ...state, products: action.payload };
     case LOAD_PRODUCTS_FAILED:
       return state;
+    case ADD_PRODUCT_SUCCESS:
+      return { ...state, products: action.payload };
     default:
       return state;
   }

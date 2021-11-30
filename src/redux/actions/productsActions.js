@@ -1,4 +1,6 @@
-import { LOAD_PRODUCTS_SUCCESS } from "../ActionTypes";
+import { ADD_PRODUCT_SUCCESS, LOAD_PRODUCTS_SUCCESS } from "../ActionTypes";
+import shortid from "shortid";
+import { calcNewPrice } from "../../tools/helperFunctions";
 
 export const fetchProducts = () => (dispatch) => {
   const dispatchData = {
@@ -32,3 +34,20 @@ export const reduceProductQuantity =
     localStorage.setItem("products", JSON.stringify(dispatchData.payload));
     dispatch(dispatchData);
   };
+
+export const addProduct = (formValues) => (dispatch, getState) => {
+  const product = {
+    _id: shortid.generate(),
+    title: formValues.title,
+    quantity: formValues.quantity,
+    price: calcNewPrice(1.2, 1.5, formValues.counterOffer),
+  };
+  const products = getState().fromProducts.products.slice();
+  products.push(product);
+
+  localStorage.setItem("products", JSON.stringify(products));
+  dispatch({
+    type: ADD_PRODUCT_SUCCESS,
+    payload: products,
+  });
+};

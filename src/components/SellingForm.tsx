@@ -7,25 +7,24 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { formatPrice, makePriceOffer } from "../tools/helperFunctions";
+import { formatPrice, calcNewPrice } from "../tools/helperFunctions";
 import { useNavigate } from "react-router-dom";
+import { SellingFormValues as Values } from "../tools/interfaces";
 
-const SellingForm = () => {
+const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
+  const { addProduct } = props;
   const navigate = useNavigate();
-
-  interface Values {
-    title: string;
-    quantity: number;
-    desiredPrice: number;
-    counterOffer: number;
-  }
-
   const [counterOffer, setCounterOffer] = useState(0);
   const [acceptOffer, setAcceptOffer] = useState(false);
 
   const onFormSubmit = (values: Values) => {
     if (counterOffer > 0 && acceptOffer) {
+      const formValues = {
+        ...values,
+        counterOffer: parseFloat(counterOffer.toFixed(2)),
+      };
       toast.success("Item successfully sold.");
+      addProduct(formValues);
       navigate("/");
       return;
     }
@@ -33,9 +32,7 @@ const SellingForm = () => {
       navigate("/");
       return;
     }
-
-    const cf = parseFloat(makePriceOffer(values.desiredPrice).toFixed(2));
-    setCounterOffer(cf);
+    setCounterOffer(calcNewPrice(0.5, 0.9, values.desiredPrice));
     toast.success(`Our offer is: ${formatPrice(cf)}. Do you accept?`);
   };
 
@@ -43,14 +40,12 @@ const SellingForm = () => {
     title: Yup.string().required("Required.").max(50, "Max 50 characters."),
     quantity: Yup.number().required("Required.").min(1, "At least one."),
     desiredPrice: Yup.number().required("Required."),
-    counterOffer: Yup.number(),
   });
 
   const initialValues = {
     title: "",
     quantity: 1,
     desiredPrice: 0,
-    counterOffer: counterOffer,
   };
 
   return (
@@ -95,21 +90,10 @@ const SellingForm = () => {
               )}
             </FormFieldWrapper>
             {counterOffer > 0 && (
-              <FormFieldWrapper>
-                <label htmlFor="counterOffer">
-                  <strong>{`Our offer is: `}</strong>
-                </label>
-                <Field
-                  name="counterOffer"
-                  disabled={true}
-                  value={counterOffer}
-                />
-                {touched.desiredPrice && errors.desiredPrice && (
-                  <ErrorWrapper>
-                    <div>{errors.counterOffer}</div>
-                  </ErrorWrapper>
-                )}
-              </FormFieldWrapper>
+              <div>
+                <strong>{`Our offer is: `}</strong>
+                <label>{formatPrice(counterOffer)}</label>
+              </div>
             )}
             {counterOffer === 0 ? (
               <ButtonLarge>Make offer</ButtonLarge>

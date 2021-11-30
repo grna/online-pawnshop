@@ -33,6 +33,6 @@ export const checkOfferedPrice = (
   return true;
 };
 
-export const makePriceOffer = (desiredPrice: number) => {
-  return desiredPrice * (Math.random() * (0.9 - 0.5) + 0.5);
+export const calcNewPrice = (min: number, max: number, price: number) => {
+  return parseFloat((price * (Math.random() * (max - min) + min)).toFixed(2));
 };
