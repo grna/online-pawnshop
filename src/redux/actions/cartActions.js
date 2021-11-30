@@ -3,7 +3,7 @@ import {
   CART_CHECKOUT_SUCCESS,
   REMOVE_FROM_CART_SUCCESS,
 } from "../ActionTypes";
-import { reduceProductQuantity } from "./productsActions";
+import { reduceProductQuantity, addFromCart } from "./productsActions";
 
 export const addToCart = (product) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.slice();
@@ -33,6 +33,11 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     (item) => item._id !== id
   );
   const total = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
+  const cartItem = getState().fromCart.cartItems.find(
+    (item) => item._id === id
+  );
+
+  dispatch(addFromCart(cartItem));
   dispatch({
     type: REMOVE_FROM_CART_SUCCESS,
     payload: { cartItems, total },
