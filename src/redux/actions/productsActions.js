@@ -51,3 +51,20 @@ export const addProduct = (formValues) => (dispatch, getState) => {
     payload: products,
   });
 };
+
+export const addFromCart = (cartItem) => (dispatch, getState) => {
+  const products = getState().fromProducts.products.slice();
+  const product = products.find((p) => p._id === cartItem._id);
+
+  if (!product) {
+    products.push(cartItem);
+  } else {
+    product.quantity += cartItem.quantity;
+  }
+
+  localStorage.setItem("products", JSON.stringify(products));
+  dispatch({
+    type: ADD_PRODUCT_SUCCESS,
+    payload: products,
+  });
+};
