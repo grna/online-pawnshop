@@ -2,28 +2,21 @@ import React from "react";
 import { populateSelectOptions } from "../tools/helperFunctions";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { TypeProduct } from "../tools/interfaces";
+import {
+  BuyingFormValues as Values,
+  TypeBuyingFormProps as Props,
+} from "../tools/interfaces";
 import { toast } from "react-toastify";
 import { checkOfferedPrice } from "../tools/helperFunctions";
 
-const BuyingForm = (props: {
-  product: TypeProduct;
-  addToCart: (cartItem: TypeProduct) => void;
-}) => {
-  const { product, addToCart } = props;
-
-  interface Values {
-    quantity: number;
-    offeredPrice: number;
-  }
-
+const BuyingForm = ({ product, addToCart }: Props) => {
   const BuyingFormErrorSchema = Yup.object().shape({
-    quantity: Yup.number().required("Required!"),
+    quantity: Yup.string().required("Required!"),
     offeredPrice: Yup.number().required("Required!"),
   });
 
   const onFormSubmit = (values: Values) => {
-    if (!checkOfferedPrice(values.offeredPrice, product.price)) {
+    if (!checkOfferedPrice(parseFloat(values.offeredPrice), product.price)) {
       toast.error("Offered price is too low.");
       return;
     }
@@ -31,15 +24,15 @@ const BuyingForm = (props: {
     const cartItem = {
       _id: product._id,
       title: product.title,
-      quantity: values.quantity,
-      price: values.offeredPrice,
+      quantity: parseInt(values.quantity),
+      price: parseFloat(values.offeredPrice),
     };
     addToCart(cartItem);
   };
 
   const initialValues = {
-    quantity: 1,
-    offeredPrice: product.price,
+    quantity: "1",
+    offeredPrice: `${product.price}`,
   };
 
   return (
@@ -55,9 +48,7 @@ const BuyingForm = (props: {
             </label>
             <Field className="price-field" name="offeredPrice" />
             {touched.offeredPrice && errors.offeredPrice && (
-              <div>
-                <div>{errors.offeredPrice}</div>
-              </div>
+              <div className="error">{errors.offeredPrice}</div>
             )}
           </div>
           <div className="mg-1rm">
@@ -68,9 +59,7 @@ const BuyingForm = (props: {
               {populateSelectOptions(product.quantity)}
             </Field>
             {touched.quantity && errors.quantity && (
-              <div>
-                <div>{errors.quantity}</div>
-              </div>
+              <div className="error">{errors.quantity}</div>
             )}
           </div>
           <button className="btn-prim" type="submit">

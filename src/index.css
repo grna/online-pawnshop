@@ -50,7 +50,7 @@ header ul {
 .fl-row-cent {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .fl-wrp {
@@ -123,6 +123,10 @@ input {
 }
 .w-20 {
   width: 20%;
+}
+
+.error {
+  color: #be1e1e;
 }
 
 @media only screen and (max-width: 1280px) {

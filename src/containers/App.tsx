@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import SellingPage from "../components/SellingPage";
-import BuyingPage from "../components/BuyingPage";
+import SellingContainer from "../containers/SellingContainer";
+import ProductContainer from "../containers/ProductContainer";
 import Header from "../components/Header";
 import LandingPage from "../components/LandingPage";
-import CartContainer from "../components/CartContainer";
+import CartContainer from "../containers/CartContainer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -25,8 +25,8 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/sell" element={<SellingPage />} />
-        <Route path="/buy" element={<BuyingPage />} />
+        <Route path="/sell" element={<SellingContainer />} />
+        <Route path="/buy" element={<ProductContainer />} />
         <Route path="/cart" element={<CartContainer />} />
       </Routes>
     </div>

@@ -1,22 +1,21 @@
 import React from "react";
 import { formatPrice } from "../tools/helperFunctions";
-import { TypeProduct } from "../tools/interfaces";
+import { TypeCartItemsListProps as Props } from "../tools/interfaces";
 import Product from "./Product";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const CartItemsList = (props: {
-  cartItems: TypeProduct[];
-  total: number;
-  cartCheckOut: () => void;
-  removeFromCart: (id: string) => void;
-}) => {
+const CartItemsList = ({
+  cartItems,
+  total,
+  cartCheckOut,
+  removeFromCart,
+}: Props) => {
   const navigate = useNavigate();
-  const { cartItems, total, cartCheckOut, removeFromCart } = props;
 
   const onCheckOut = (e: React.MouseEvent) => {
     e.preventDefault();
-    toast.success("Your order has been placed.");
+    toast.success(`Your order has been placed. Total: ${formatPrice(total)}.`);
     cartCheckOut();
     navigate("/buy");
   };
@@ -27,9 +26,13 @@ const CartItemsList = (props: {
     removeFromCart(id);
   };
 
+  if (cartItems.length === 0) {
+    return <div className="fl-col-cent mg-1rm">You have no cart items.</div>;
+  }
+
   return (
     <div className="fl-col-cent">
-      <div className="fl-row-cent mg-1rm w-100">
+      <div className="fl-row-cent mg-1rm w-100 fl-wrp">
         {cartItems.map((item) => (
           <Product key={item._id} product={item}>
             <button

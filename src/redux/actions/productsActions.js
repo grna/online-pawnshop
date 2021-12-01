@@ -3,56 +3,61 @@ import shortid from "shortid";
 import { calcNewPrice } from "../../tools/helperFunctions";
 
 export const fetchProducts = () => (dispatch) => {
-  const dispatchData = {
-    type: LOAD_PRODUCTS_SUCCESS,
-    payload: [],
-  };
+  const products =
+    JSON.parse(localStorage.getItem("products")) || require("../../data.json");
 
-  if (localStorage.getItem("products")) {
-    dispatchData.payload = JSON.parse(localStorage.getItem("products"));
-  } else {
-    dispatchData.payload = require("../../data.json");
-  }
-
-  dispatch(dispatchData);
-};
-
-export const reduceProductQuantity =
-  (cartId, cartQuantity) => (dispatch, getState) => {
-    const products = getState().fromProducts.products.slice();
-    const product = products.find((p) => p._id === cartId);
-    product.quantity -= cartQuantity;
-
-    const dispatchData = {
-      type: LOAD_PRODUCTS_SUCCESS,
-      payload: products,
-    };
-
-    if (product.quantity === 0) {
-      dispatchData.payload = products.filter((p) => p._id !== cartId);
-    }
-    localStorage.setItem("products", JSON.stringify(dispatchData.payload));
-    dispatch(dispatchData);
-  };
-
-export const addProduct = (formValues) => (dispatch, getState) => {
-  const product = {
-    _id: shortid.generate(),
-    title: formValues.title,
-    quantity: formValues.quantity,
-    price: calcNewPrice(1.2, 1.5, formValues.counterOffer),
-  };
-  const products = getState().fromProducts.products.slice();
-  products.push(product);
-
-  localStorage.setItem("products", JSON.stringify(products));
   dispatch({
-    type: ADD_PRODUCT_SUCCESS,
-    payload: products,
+    type: LOAD_PRODUCTS_SUCCESS,
+    payload: { products },
   });
 };
 
-export const addFromCart = (cartItem) => (dispatch, getState) => {
+export const reduceProductQuantity =
+  (cartItemId, cartItemQuantity) => (dispatch, getState) => {
+    const products = getState().fromProducts.products.slice();
+    const product = products.find((p) => p._id === cartItemId);
+    product.quantity -= cartItemQuantity;
+
+    const dispatchData = {
+      type: LOAD_PRODUCTS_SUCCESS,
+      payload: { products },
+    };
+
+    if (product.quantity === 0) {
+      dispatchData.payload.products = products.filter(
+        (p) => p._id !== cartItemId
+      );
+    }
+    dispatch(dispatchData);
+    localStorage.setItem(
+      "products",
+      JSON.stringify(dispatchData.payload.products)
+    );
+  };
+
+export const addProduct = (formValues) => (dispatch, getState) => {
+  const min = 1.2;
+  const max = 1.5;
+
+  const product = {
+    _id: shortid.generate(),
+    title: formValues.title,
+    quantity: parseInt(formValues.quantity),
+    price: calcNewPrice(min, max, formValues.counterOffer),
+  };
+
+  dispatch(fetchProducts());
+
+  const products = [product, ...getState().fromProducts.products.slice()];
+
+  dispatch({
+    type: ADD_PRODUCT_SUCCESS,
+    payload: { products },
+  });
+  localStorage.setItem("products", JSON.stringify(products));
+};
+
+export const addProductFromCart = (cartItem) => (dispatch, getState) => {
   const products = getState().fromProducts.products.slice();
   const product = products.find((p) => p._id === cartItem._id);
 
@@ -62,9 +67,9 @@ export const addFromCart = (cartItem) => (dispatch, getState) => {
     product.quantity += cartItem.quantity;
   }
 
-  localStorage.setItem("products", JSON.stringify(products));
   dispatch({
     type: ADD_PRODUCT_SUCCESS,
-    payload: products,
+    payload: { products },
   });
+  localStorage.setItem("products", JSON.stringify(products));
 };
