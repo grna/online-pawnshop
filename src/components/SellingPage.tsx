@@ -9,7 +9,7 @@ const SellingPage = (props: {
 }) => {
   const { addProduct } = props;
   return (
-    <div>
+    <div className="fl-col-cent">
       <h4>What are you selling?</h4>
       <SellingForm addProduct={addProduct} />
     </div>

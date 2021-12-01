@@ -3,7 +3,6 @@ import { TypeState, TypeBuyingPageProps as Props } from "../tools/interfaces";
 import { connect } from "react-redux";
 import { fetchProducts } from "../redux/actions/productsActions";
 import ProductList from "./ProductList";
-import { ContainerCenter } from "./styledComponents";
 import { addToCart } from "../redux/actions/cartActions";
 
 const BuyingPage = (props: Props) => {
@@ -14,10 +13,10 @@ const BuyingPage = (props: Props) => {
   }, [fetchProducts]);
 
   return (
-    <ContainerCenter>
+    <div className="fl-col-cent">
       <h4>Choose your items</h4>
       <ProductList products={products} addToCart={addToCart} />
-    </ContainerCenter>
+    </div>
   );
 };
 

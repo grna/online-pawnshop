@@ -1,6 +1,5 @@
 import React from "react";
 import { TypeProduct } from "../tools/interfaces";
-import { ProductWrapper } from "./styledComponents";
 import { formatPrice } from "../tools/helperFunctions";
 
 const Product = (props: {
@@ -10,16 +9,21 @@ const Product = (props: {
   const { children, product } = props;
 
   return (
-    <ProductWrapper>
-      <h5>{product.title}</h5>
-      <p>
-        <strong>{`Quantity: `}</strong>
-        {product.quantity}
-        <strong>{` Price: `}</strong>
-        {formatPrice(product.price)}
-      </p>
+    <div className="fl-col-cent product">
+      <h5 className="mg-1rm txt-cent">{product.title}</h5>
+      <div>
+        <label className="mg-1rm">
+          <strong>{`Quantity: `}</strong>
+          {product.quantity}
+        </label>
+
+        <label className="mg-1rm">
+          <strong>{` Price: `}</strong>
+          {formatPrice(product.price)}
+        </label>
+      </div>
       {children}
-    </ProductWrapper>
+    </div>
   );
 };
 

@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import {
-  FormFieldWrapper,
-  ErrorWrapper,
-  ButtonLarge,
-} from "./styledComponents";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -50,68 +45,76 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
   };
 
   return (
-    <>
+    <div>
       <Formik
         initialValues={initialValues}
         validationSchema={SellingFormValidationSchema}
         onSubmit={(values) => onFormSubmit(values)}>
         {({ errors, touched }) => (
-          <Form>
-            <FormFieldWrapper>
+          <Form className="fl-col-cent">
+            <div className="mg-1rm">
               <label htmlFor="title">
                 <strong>{`Title: `}</strong>
               </label>
               <Field name="title" />
               {touched.title && errors.title && (
-                <ErrorWrapper>
+                <div>
                   <div>{errors.title}</div>
-                </ErrorWrapper>
+                </div>
               )}
-            </FormFieldWrapper>
-            <FormFieldWrapper>
+            </div>
+            <div className="mg-1rm">
               <label htmlFor="quantity">
                 <strong>{`Quantity: `}</strong>
               </label>
               <Field name="quantity" />
               {touched.quantity && errors.quantity && (
-                <ErrorWrapper>
+                <div>
                   <div>{errors.quantity}</div>
-                </ErrorWrapper>
+                </div>
               )}
-            </FormFieldWrapper>
-            <FormFieldWrapper>
+            </div>
+            <div className="mg-1rm">
               <label htmlFor="desiredPrice">
                 <strong>{`Desired price: `}</strong>
               </label>
               <Field name="desiredPrice" />
               {touched.desiredPrice && errors.desiredPrice && (
-                <ErrorWrapper>
+                <div>
                   <div>{errors.desiredPrice}</div>
-                </ErrorWrapper>
+                </div>
               )}
-            </FormFieldWrapper>
+            </div>
             {counterOffer > 0 && (
               <div>
-                <strong>{`Our offer is: `}</strong>
-                <label>{formatPrice(counterOffer)}</label>
+                <div className="mg-1rm">
+                  <strong>{`Our offer is: `}</strong>
+                </div>
+                <label className="mg-1rm txt-cent">
+                  {formatPrice(counterOffer)}
+                </label>
               </div>
             )}
             {counterOffer === 0 ? (
-              <ButtonLarge>Make offer</ButtonLarge>
+              <button className="btn-prim">Make offer</button>
             ) : (
               <div>
-                <ButtonLarge onClick={() => setAcceptOffer(true)}>
+                <button
+                  className="btn-prim"
+                  onClick={() => setAcceptOffer(true)}>
                   Accept
-                </ButtonLarge>
-                <ButtonLarge onClick={() => setAcceptOffer(false)}>
+                </button>
+                <button
+                  className="btn-dang"
+                  onClick={() => setAcceptOffer(false)}>
                   Decline
-                </ButtonLarge>
+                </button>
               </div>
             )}
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 
