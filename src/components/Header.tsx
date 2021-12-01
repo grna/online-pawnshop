@@ -1,14 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { HeaderWrapper } from "./styledComponents";
 
 const Header = () => {
   return (
-    <HeaderWrapper>
+    <header>
       <NavLink to="/">
         <h4>Online Pawnshop</h4>
       </NavLink>
-      <ul>
+      <ul className="w-20">
         <li>
           <NavLink to="/">HOME</NavLink>
         </li>
@@ -22,7 +21,7 @@ const Header = () => {
           <NavLink to="/cart">CART</NavLink>
         </li>
       </ul>
-    </HeaderWrapper>
+    </header>
   );
 };
 

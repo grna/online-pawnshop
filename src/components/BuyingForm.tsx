@@ -1,9 +1,4 @@
 import React from "react";
-import {
-  ButtonLarge,
-  FormFieldWrapper,
-  ErrorWrapper,
-} from "./styledComponents";
 import { populateSelectOptions } from "../tools/helperFunctions";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -53,19 +48,19 @@ const BuyingForm = (props: {
       validationSchema={BuyingFormErrorSchema}
       onSubmit={(values) => onFormSubmit(values)}>
       {({ errors, touched }) => (
-        <Form>
-          <FormFieldWrapper>
+        <Form className="fl-col-cent">
+          <div className="mg-1rm">
             <label htmlFor="offeredPrice">
               <strong>Your price:</strong>
             </label>
-            <Field name="offeredPrice" />
+            <Field className="price-field" name="offeredPrice" />
             {touched.offeredPrice && errors.offeredPrice && (
-              <ErrorWrapper>
+              <div>
                 <div>{errors.offeredPrice}</div>
-              </ErrorWrapper>
+              </div>
             )}
-          </FormFieldWrapper>
-          <FormFieldWrapper>
+          </div>
+          <div className="mg-1rm">
             <label htmlFor="quantity">
               <strong>{`Quantity: `}</strong>
             </label>
@@ -73,12 +68,14 @@ const BuyingForm = (props: {
               {populateSelectOptions(product.quantity)}
             </Field>
             {touched.quantity && errors.quantity && (
-              <ErrorWrapper>
+              <div>
                 <div>{errors.quantity}</div>
-              </ErrorWrapper>
+              </div>
             )}
-          </FormFieldWrapper>
-          <ButtonLarge>To Cart</ButtonLarge>
+          </div>
+          <button className="btn-prim" type="submit">
+            To Cart
+          </button>
         </Form>
       )}
     </Formik>

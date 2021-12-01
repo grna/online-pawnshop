@@ -1,7 +1,6 @@
 import React from "react";
 import { TypeProduct } from "../tools/interfaces";
 import Product from "./Product";
-import { ProductListWrapper } from "./styledComponents";
 import BuyingForm from "./BuyingForm";
 
 const ProductList = (props: {
@@ -10,13 +9,13 @@ const ProductList = (props: {
 }) => {
   const { products, addToCart } = props;
   return (
-    <ProductListWrapper>
+    <div className="fl-row-cent fl-wrp w-100">
       {products.map((product) => (
         <Product key={product._id} product={product}>
           <BuyingForm product={product} addToCart={addToCart} />
         </Product>
       ))}
-    </ProductListWrapper>
+    </div>
   );
 };
 

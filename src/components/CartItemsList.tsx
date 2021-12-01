@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { formatPrice } from "../tools/helperFunctions";
 import { TypeProduct } from "../tools/interfaces";
 import Product from "./Product";
-import { ButtonLarge, ProductListWrapper } from "./styledComponents";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -29,19 +28,23 @@ const CartItemsList = (props: {
   };
 
   return (
-    <>
-      <ProductListWrapper>
+    <div className="fl-col-cent">
+      <div className="fl-row-cent mg-1rm w-100">
         {cartItems.map((item) => (
           <Product key={item._id} product={item}>
-            <ButtonLarge onClick={(e) => onRemoveClick(e, item._id)}>
+            <button
+              className="btn-dang"
+              onClick={(e) => onRemoveClick(e, item._id)}>
               Remove
-            </ButtonLarge>
+            </button>
           </Product>
         ))}
-      </ProductListWrapper>
+      </div>
       <div>{`Total: ${formatPrice(total)}`}</div>
-      <ButtonLarge onClick={(e) => onCheckOut(e)}>Checkout</ButtonLarge>
-    </>
+      <button className="btn-prim" onClick={(e) => onCheckOut(e)}>
+        Checkout
+      </button>
+    </div>
   );
 };
 

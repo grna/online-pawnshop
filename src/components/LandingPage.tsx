@@ -1,20 +1,23 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LandingPageWrapper } from "./styledComponents";
 
 const LandingPage = () => {
   return (
-    <LandingPageWrapper>
+    <div className="fl-col-cent">
       <h4>Hi! Are you buying or selling?</h4>
-      <ul>
+      <ul className="fl-row-cent">
         <li>
-          <NavLink to="/sell">SELLING</NavLink>
+          <NavLink className="mg-1rm" to="/sell">
+            SELLING
+          </NavLink>
         </li>
         <li>
-          <NavLink to="/buy">BUYING</NavLink>
+          <NavLink className="mg-1rm" to="/buy">
+            BUYING
+          </NavLink>
         </li>
       </ul>
-    </LandingPageWrapper>
+    </div>
   );
 };
 
