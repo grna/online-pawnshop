@@ -2,12 +2,10 @@ import React, { useEffect } from "react";
 import { TypeState, TypeBuyingPageProps as Props } from "../tools/interfaces";
 import { connect } from "react-redux";
 import { fetchProducts } from "../redux/actions/productsActions";
-import ProductList from "./ProductList";
+import ProductList from "../components/ProductList";
 import { addToCart } from "../redux/actions/cartActions";
 
-const BuyingPage = (props: Props) => {
-  const { products, fetchProducts, addToCart } = props;
-
+const ProductContainer = ({ products, fetchProducts, addToCart }: Props) => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
@@ -25,5 +23,5 @@ const mapStateToProps = (state: TypeState) => ({
 });
 
 export default connect(mapStateToProps, { fetchProducts, addToCart })(
-  BuyingPage
+  ProductContainer
 );

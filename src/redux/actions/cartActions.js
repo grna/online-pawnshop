@@ -4,10 +4,10 @@ import {
   LOAD_CART_ITEMS_SUCCESS,
   REMOVE_FROM_CART_SUCCESS,
 } from "../ActionTypes";
-import { reduceProductQuantity, addFromCart } from "./productsActions";
+import { reduceProductQuantity, addProductFromCart } from "./productsActions";
 
 export const fetchCartItems = () => (dispatch) => {
-  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const total = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
 
   dispatch({
@@ -16,27 +16,24 @@ export const fetchCartItems = () => (dispatch) => {
   });
 };
 
-export const addToCart = (product) => (dispatch, getState) => {
+export const addToCart = (cartItem) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.slice();
   const total =
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0) +
-    product.price * product.quantity;
-  let inCart = false;
-  cartItems.forEach((item) => {
-    if (item._id === product._id) {
-      inCart = true;
-      item.quantity++;
-    }
-  });
-  if (!inCart) {
-    cartItems.push(product);
+    cartItem.price * cartItem.quantity;
+
+  if (cartItems.find((item) => item._id === cartItem._id)) {
+    cartItem.quantity++;
+  } else {
+    cartItems.push(cartItem);
   }
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  dispatch(reduceProductQuantity(product._id, product.quantity));
+
+  dispatch(reduceProductQuantity(cartItem._id, cartItem.quantity));
   dispatch({
     type: ADD_TO_CART_SUCCESS,
     payload: { cartItems, total },
   });
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
 export const removeFromCart = (id) => (dispatch, getState) => {
@@ -48,7 +45,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
     (item) => item._id === id
   );
 
-  dispatch(addFromCart(cartItem));
+  dispatch(addProductFromCart(cartItem));
   dispatch({
     type: REMOVE_FROM_CART_SUCCESS,
     payload: { cartItems, total },

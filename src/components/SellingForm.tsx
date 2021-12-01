@@ -45,7 +45,8 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
   };
 
   return (
-    <div>
+    <div className="fl-col-cent">
+      <h4>What are you selling?</h4>
       <Formik
         initialValues={initialValues}
         validationSchema={SellingFormValidationSchema}
@@ -58,9 +59,7 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
               </label>
               <Field name="title" />
               {touched.title && errors.title && (
-                <div>
-                  <div>{errors.title}</div>
-                </div>
+                <div className="error">{errors.title}</div>
               )}
             </div>
             <div className="mg-1rm">
@@ -69,9 +68,7 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
               </label>
               <Field name="quantity" />
               {touched.quantity && errors.quantity && (
-                <div>
-                  <div>{errors.quantity}</div>
-                </div>
+                <div className="error">{errors.quantity}</div>
               )}
             </div>
             <div className="mg-1rm">
@@ -80,9 +77,7 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
               </label>
               <Field name="desiredPrice" />
               {touched.desiredPrice && errors.desiredPrice && (
-                <div>
-                  <div>{errors.desiredPrice}</div>
-                </div>
+                <div className="error">{errors.desiredPrice}</div>
               )}
             </div>
             {counterOffer > 0 && (
