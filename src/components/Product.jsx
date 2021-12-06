@@ -1,13 +1,9 @@
 import React from "react";
-import { TypeProduct } from "../tools/interfaces";
 import { formatPrice } from "../tools/helperFunctions";
+import { ProductType } from "../tools/propTypes";
+import PropTypes from "prop-types";
 
-const Product = (props: {
-  children: React.ReactNode | null;
-  product: TypeProduct;
-}) => {
-  const { children, product } = props;
-
+const Product = ({ children, product }) => {
   return (
     <div className="fl-col-cent product">
       <h5 className="mg-1rm txt-cent">{product.title}</h5>
@@ -25,6 +21,11 @@ const Product = (props: {
       {children}
     </div>
   );
+};
+
+Product.propTypes = {
+  children: PropTypes.element,
+  product: ProductType,
 };
 
 export default Product;

@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  TypeState,
-  TypeCartContainerProps as Props,
-} from "../tools/interfaces";
 import CartItemsList from "../components/CartItemsList";
 import {
   cartCheckOut,
   removeFromCart,
   fetchCartItems,
 } from "../redux/actions/cartActions";
+import { ProductType } from "../tools/propTypes";
+import PropTypes from "prop-types";
 
 const CartContainer = ({
   cartItems,
@@ -17,7 +15,7 @@ const CartContainer = ({
   cartCheckOut,
   removeFromCart,
   fetchCartItems,
-}: Props) => {
+}) => {
   useEffect(() => {
     fetchCartItems();
   }, [fetchCartItems]);
@@ -32,7 +30,15 @@ const CartContainer = ({
   );
 };
 
-const mapStateToProps = (state: TypeState) => ({
+CartContainer.propTypes = {
+  cartItems: PropTypes.arrayOf(ProductType),
+  total: PropTypes.number,
+  cartCheckOut: PropTypes.func,
+  removeFromCart: PropTypes.func,
+  fetchCartItems: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
   cartItems: state.fromCart.cartItems,
   total: state.fromCart.total,
 });

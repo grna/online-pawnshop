@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { TypeState, TypeBuyingPageProps as Props } from "../tools/interfaces";
 import { connect } from "react-redux";
 import { fetchProducts } from "../redux/actions/productsActions";
 import ProductList from "../components/ProductList";
 import { addToCart } from "../redux/actions/cartActions";
+import { ProductType } from "../tools/propTypes";
+import PropTypes from "prop-types";
 
-const ProductContainer = ({ products, fetchProducts, addToCart }: Props) => {
+const ProductContainer = ({ products, fetchProducts, addToCart }) => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
@@ -18,7 +19,13 @@ const ProductContainer = ({ products, fetchProducts, addToCart }: Props) => {
   );
 };
 
-const mapStateToProps = (state: TypeState) => ({
+ProductContainer.propTypes = {
+  products: PropTypes.arrayOf(ProductType),
+  fetchProducts: PropTypes.func,
+  addToCart: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
   products: state.fromProducts.products,
 });
 

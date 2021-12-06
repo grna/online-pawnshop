@@ -2,16 +2,17 @@ import React from "react";
 import SellingForm from "../components/SellingForm";
 import { connect } from "react-redux";
 import { addProduct } from "../redux/actions/productsActions";
-import {
-  TypeSellingContainerProps as Props,
-  TypeState,
-} from "../tools/interfaces";
+import PropTypes from "prop-types";
 
-const SellingContainer = ({ addProduct }: Props) => {
+const SellingContainer = ({ addProduct }) => {
   return <SellingForm addProduct={addProduct} />;
 };
 
-const mapStateToProps = (state: TypeState) => ({
+SellingContainer.propTypes = {
+  addProduct: PropTypes.func,
+};
+
+const mapStateToProps = (state) => ({
   products: state.fromProducts.products,
 });
 
