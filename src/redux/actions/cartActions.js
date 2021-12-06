@@ -16,13 +16,17 @@ export const fetchCartItems = () => (dispatch) => {
   });
 };
 
+const itemAlreadyInCart = (items, item) => {
+  return items.find((i) => i._id === item._id && i.price === item.price);
+};
+
 export const addToCart = (cartItem) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.slice();
   const total =
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0) +
     cartItem.price * cartItem.quantity;
 
-  if (cartItems.find((item) => item._id === cartItem._id)) {
+  if (itemAlreadyInCart(cartItems, cartItem)) {
     cartItem.quantity++;
   } else {
     cartItems.push(cartItem);

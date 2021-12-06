@@ -24,7 +24,7 @@ const Product = ({ children, product }) => {
 };
 
 Product.propTypes = {
-  children: PropTypes.element,
+  children: PropTypes.object,
   product: ProductType,
 };
 

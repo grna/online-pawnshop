@@ -1,10 +1,10 @@
-export const formatPrice = (price: number) => "€" + price.toFixed(2) + " ";
+export const formatPrice = (price) => "€" + price.toFixed(2) + " ";
 
-export const populateSelectOptions = (quantity: number) => {
+export const populateSelectOptions = (quantity) => {
   const options = [];
   for (let i = 1; i < quantity + 1; i++) {
     options.push(
-      <option key={i} value={i}>
+      <option key={"optionId_" + i} value={i}>
         {i}
       </option>
     );
@@ -12,14 +12,11 @@ export const populateSelectOptions = (quantity: number) => {
   return options;
 };
 
-const rollTheDice = (min: number, max: number) => {
+const rollTheDice = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const checkOfferedPrice = (
-  offeredPrice: number,
-  productPrice: number
-) => {
+export const checkOfferedPrice = (offeredPrice, productPrice) => {
   const acceptablePrice = productPrice * 0.9;
 
   if (offeredPrice < acceptablePrice) {
@@ -33,6 +30,6 @@ export const checkOfferedPrice = (
   return true;
 };
 
-export const calcNewPrice = (min: number, max: number, price: number) => {
+export const calcNewPrice = (min, max, price) => {
   return parseFloat((price * (Math.random() * (max - min) + min)).toFixed(2));
 };
