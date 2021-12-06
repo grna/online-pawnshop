@@ -2,20 +2,18 @@ import React from "react";
 import { populateSelectOptions } from "../tools/helperFunctions";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import {
-  BuyingFormValues as Values,
-  TypeBuyingFormProps as Props,
-} from "../tools/interfaces";
 import { toast } from "react-toastify";
 import { checkOfferedPrice } from "../tools/helperFunctions";
+import PropTypes from "prop-types";
+import { ProductType } from "../tools/propTypes";
 
-const BuyingForm = ({ product, addToCart }: Props) => {
+const BuyingForm = ({ product, addToCart }) => {
   const BuyingFormErrorSchema = Yup.object().shape({
     quantity: Yup.string().required("Required!"),
     offeredPrice: Yup.number().required("Required!"),
   });
 
-  const onFormSubmit = (values: Values) => {
+  const onFormSubmit = (values) => {
     if (!checkOfferedPrice(parseFloat(values.offeredPrice), product.price)) {
       toast.error("Offered price is too low.");
       return;
@@ -69,6 +67,11 @@ const BuyingForm = ({ product, addToCart }: Props) => {
       )}
     </Formik>
   );
+};
+
+BuyingForm.propTypes = {
+  product: ProductType,
+  addToCart: PropTypes.func,
 };
 
 export default BuyingForm;

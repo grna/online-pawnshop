@@ -1,13 +1,10 @@
 import React from "react";
-import { TypeProduct } from "../tools/interfaces";
 import Product from "./Product";
 import BuyingForm from "./BuyingForm";
+import { ProductType } from "../tools/propTypes";
+import PropTypes from "prop-types";
 
-const ProductList = (props: {
-  products: TypeProduct[];
-  addToCart: (cartItem: TypeProduct) => void;
-}) => {
-  const { products, addToCart } = props;
+const ProductList = ({ products, addToCart }) => {
   return (
     <div className="fl-row-cent fl-wrp w-100">
       {products.map((product) => (
@@ -17,6 +14,11 @@ const ProductList = (props: {
       ))}
     </div>
   );
+};
+
+ProductList.propTypes = {
+  products: PropTypes.arrayOf(ProductType),
+  addToCart: PropTypes.func,
 };
 
 export default ProductList;

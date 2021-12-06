@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import SellingContainer from "../containers/SellingContainer";
-import ProductContainer from "../containers/ProductContainer";
+import SellingContainer from "./SellingContainer";
+import ProductContainer from "./ProductContainer";
 import Header from "../components/Header";
 import LandingPage from "../components/LandingPage";
-import CartContainer from "../containers/CartContainer";
+import CartContainer from "./CartContainer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

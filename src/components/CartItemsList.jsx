@@ -1,26 +1,22 @@
 import React from "react";
 import { formatPrice } from "../tools/helperFunctions";
-import { TypeCartItemsListProps as Props } from "../tools/interfaces";
 import Product from "./Product";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ProductType } from "../tools/propTypes";
+import PropTypes from "prop-types";
 
-const CartItemsList = ({
-  cartItems,
-  total,
-  cartCheckOut,
-  removeFromCart,
-}: Props) => {
+const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
   const navigate = useNavigate();
 
-  const onCheckOut = (e: React.MouseEvent) => {
+  const onCheckOut = (e) => {
     e.preventDefault();
     toast.success(`Your order has been placed. Total: ${formatPrice(total)}.`);
     cartCheckOut();
     navigate("/buy");
   };
 
-  const onRemoveClick = (e: React.MouseEvent, id: string) => {
+  const onRemoveClick = (e, id) => {
     e.preventDefault();
     toast.success("Item removed.");
     removeFromCart(id);
@@ -49,6 +45,13 @@ const CartItemsList = ({
       </button>
     </div>
   );
+};
+
+CartItemsList.propTypes = {
+  cartItems: ProductType,
+  total: PropTypes.number,
+  cartCheckOut: PropTypes.func,
+  removeFromCart: PropTypes.func,
 };
 
 export default CartItemsList;

@@ -4,15 +4,14 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { formatPrice, calcNewPrice } from "../tools/helperFunctions";
 import { useNavigate } from "react-router-dom";
-import { SellingFormValues as Values } from "../tools/interfaces";
+import PropTypes from "prop-types";
 
-const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
-  const { addProduct } = props;
+const SellingForm = ({ addProduct }) => {
   const navigate = useNavigate();
   const [counterOffer, setCounterOffer] = useState(0);
   const [acceptOffer, setAcceptOffer] = useState(false);
 
-  const onFormSubmit = (values: Values) => {
+  const onFormSubmit = (values) => {
     if (counterOffer > 0 && acceptOffer) {
       const formValues = {
         ...values,
@@ -111,6 +110,10 @@ const SellingForm = (props: { addProduct: (formValues: Values) => void }) => {
       </Formik>
     </div>
   );
+};
+
+SellingForm.propTypes = {
+  addProduct: PropTypes.func,
 };
 
 export default SellingForm;
