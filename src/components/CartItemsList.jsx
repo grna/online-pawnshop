@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { ProductType } from "../tools/propTypes";
 import PropTypes from "prop-types";
+import shortid from "shortid";
 
 const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
     <div className="fl-col-cent">
       <div className="fl-row-cent mg-1rm w-100 fl-wrp">
         {cartItems.map((item) => (
-          <Product key={item._id} product={item}>
+          <Product key={shortid.generate()} product={item}>
             <button
               className="btn-dang"
               onClick={(e) => onRemoveClick(e, item._id)}>
@@ -48,7 +49,7 @@ const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
 };
 
 CartItemsList.propTypes = {
-  cartItems: ProductType,
+  cartItems: PropTypes.arrayOf(ProductType),
   total: PropTypes.number,
   cartCheckOut: PropTypes.func,
   removeFromCart: PropTypes.func,

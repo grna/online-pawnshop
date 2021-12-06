@@ -16,23 +16,29 @@ export const fetchCartItems = () => (dispatch) => {
   });
 };
 
-const itemAlreadyInCart = (items, item) => {
-  return items.find((i) => i._id === item._id && i.price === item.price);
+const checkIfItemInCart = (items, item) => {
+  const cartItem = items.find(
+    (i) => i._id === item._id && i.price === item.price
+  );
+  const inCart = cartItem === undefined ? false : true;
+  return { inCart, cartItem };
 };
 
-export const addToCart = (cartItem) => (dispatch, getState) => {
+export const addToCart = (newItem) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.slice();
   const total =
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0) +
-    cartItem.price * cartItem.quantity;
+    newItem.price * newItem.quantity;
 
-  if (itemAlreadyInCart(cartItems, cartItem)) {
-    cartItem.quantity++;
+  const { itemInCart, cartItem } = checkIfItemInCart(cartItems, newItem);
+
+  if (itemInCart) {
+    cartItem.quantity += newItem.quantity;
   } else {
-    cartItems.push(cartItem);
+    cartItems.push(newItem);
   }
 
-  dispatch(reduceProductQuantity(cartItem._id, cartItem.quantity));
+  dispatch(reduceProductQuantity(newItem._id, newItem.quantity));
   dispatch({
     type: ADD_TO_CART_SUCCESS,
     payload: { cartItems, total },
