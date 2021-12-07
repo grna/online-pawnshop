@@ -8,11 +8,13 @@ import shortid from "shortid";
 const ProductList = ({ products, addToCart }) => {
   return (
     <div className="fl-row-cent fl-wrp w-100">
-      {products.map((product) => (
-        <Product key={shortid.generate()} product={product}>
-          <BuyingForm product={product} addToCart={addToCart} />
-        </Product>
-      ))}
+      {products
+        .filter((product) => product.quantity > 0)
+        .map((product) => (
+          <Product key={shortid.generate()} product={product}>
+            <BuyingForm product={product} addToCart={addToCart} />
+          </Product>
+        ))}
     </div>
   );
 };
