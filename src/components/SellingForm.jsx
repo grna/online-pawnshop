@@ -32,9 +32,18 @@ const SellingForm = ({ addProduct }) => {
   };
 
   const SellingFormValidationSchema = Yup.object().shape({
-    title: Yup.string().required("Required.").max(50, "Max 50 characters."),
-    quantity: Yup.number().required("Required.").min(1, "At least one."),
-    desiredPrice: Yup.number().required("Required."),
+    title: Yup.string()
+      .required("Required.")
+      .min(3, "Min 3 characters.")
+      .max(50, "Max 50 characters."),
+    quantity: Yup.number()
+      .required("Required.")
+      .min(1, "At least one.")
+      .typeError("Must be a number!"),
+    desiredPrice: Yup.number()
+      .typeError("Must be a number!")
+      .min(1, "At least 1 euro.")
+      .required("Required."),
   });
 
   const initialValues = {

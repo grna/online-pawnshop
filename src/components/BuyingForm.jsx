@@ -10,7 +10,10 @@ import { ProductType } from "../tools/propTypes";
 const BuyingForm = ({ product, addToCart }) => {
   const BuyingFormErrorSchema = Yup.object().shape({
     quantity: Yup.string().required("Required!"),
-    offeredPrice: Yup.number().required("Required!"),
+    offeredPrice: Yup.number()
+      .typeError("Must be a number!")
+      .min(1, "At least 1 euro!")
+      .required("Required!"),
   });
 
   const onFormSubmit = (values) => {
@@ -44,16 +47,22 @@ const BuyingForm = ({ product, addToCart }) => {
             <label htmlFor="offeredPrice">
               <strong>Your price:</strong>
             </label>
-            <Field className="price-field" name="offeredPrice" />
+            <Field
+              className="price-field"
+              name="offeredPrice"
+              data-testid="offeredPrice"
+            />
             {touched.offeredPrice && errors.offeredPrice && (
-              <div className="error">{errors.offeredPrice}</div>
+              <div className="error" data-testid="errors-offeredPrice">
+                {errors.offeredPrice}
+              </div>
             )}
           </div>
           <div className="mg-1rm">
             <label htmlFor="quantity">
               <strong>{`Quantity: `}</strong>
             </label>
-            <Field name="quantity" as="select">
+            <Field name="quantity" as="select" data-testid="quantity">
               {populateSelectOptions(product.quantity)}
             </Field>
             {touched.quantity && errors.quantity && (
