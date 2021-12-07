@@ -30,9 +30,9 @@ export const addToCart = (newItem) => (dispatch, getState) => {
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0) +
     newItem.price * newItem.quantity;
 
-  const { itemInCart, cartItem } = checkIfItemInCart(cartItems, newItem);
+  const { inCart, cartItem } = checkIfItemInCart(cartItems, newItem);
 
-  if (itemInCart) {
+  if (inCart) {
     cartItem.quantity += newItem.quantity;
   } else {
     cartItems.push(newItem);
@@ -46,14 +46,11 @@ export const addToCart = (newItem) => (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));
 };
 
-export const removeFromCart = (id) => (dispatch, getState) => {
+export const removeFromCart = (cartItem) => (dispatch, getState) => {
   const cartItems = getState().fromCart.cartItems.filter(
-    (item) => item._id !== id
+    (item) => item !== cartItem
   );
   const total = cartItems.reduce((a, c) => a + c.price * c.quantity, 0);
-  const cartItem = getState().fromCart.cartItems.find(
-    (item) => item._id === id
-  );
 
   dispatch(addProductFromCart(cartItem));
   dispatch({

@@ -18,21 +18,12 @@ export const reduceProductQuantity =
     const product = products.find((p) => p._id === cartItemId);
     product.quantity -= cartItemQuantity;
 
-    const dispatchData = {
+    dispatch({
       type: LOAD_PRODUCTS_SUCCESS,
       payload: { products },
-    };
+    });
 
-    if (product.quantity === 0) {
-      dispatchData.payload.products = products.filter(
-        (p) => p._id !== cartItemId
-      );
-    }
-    dispatch(dispatchData);
-    localStorage.setItem(
-      "products",
-      JSON.stringify(dispatchData.payload.products)
-    );
+    localStorage.setItem("products", JSON.stringify(products));
   };
 
 export const addProduct = (formValues) => (dispatch, getState) => {
@@ -61,11 +52,7 @@ export const addProductFromCart = (cartItem) => (dispatch, getState) => {
   const products = getState().fromProducts.products.slice();
   const product = products.find((p) => p._id === cartItem._id);
 
-  if (!product) {
-    products.push(cartItem);
-  } else {
-    product.quantity += cartItem.quantity;
-  }
+  product.quantity += cartItem.quantity;
 
   dispatch({
     type: ADD_PRODUCT_SUCCESS,

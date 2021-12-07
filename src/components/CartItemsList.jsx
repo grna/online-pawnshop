@@ -17,10 +17,10 @@ const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
     navigate("/buy");
   };
 
-  const onRemoveClick = (e, id) => {
+  const onRemoveClick = (e, item) => {
     e.preventDefault();
     toast.success("Item removed.");
-    removeFromCart(id);
+    removeFromCart(item);
   };
 
   if (cartItems.length === 0) {
@@ -34,7 +34,7 @@ const CartItemsList = ({ cartItems, total, cartCheckOut, removeFromCart }) => {
           <Product key={shortid.generate()} product={item}>
             <button
               className="btn-dang"
-              onClick={(e) => onRemoveClick(e, item._id)}>
+              onClick={(e) => onRemoveClick(e, item)}>
               Remove
             </button>
           </Product>
